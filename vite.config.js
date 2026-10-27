@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { variantIds } from './src/variants/index.js'
+import { curtainHead, curtainBody } from './src/curtain.js'
 
 // En dev, les pages sont servies sous /<variante>/ et les composants demandent
 // /<variante>/img/… ; le dossier public/ n'étant servi qu'à la racine, on retire
@@ -23,4 +24,10 @@ const variantAssets = {
   },
 }
 
-export default defineConfig({ plugins: [react(), variantAssets] })
+const curtain = {
+  name: 'curtain',
+  transformIndexHtml: (html) =>
+    html.replace('</head>', `${curtainHead()}\n</head>`).replace('<div id="root"></div>', `<div id="root"></div>\n${curtainBody('/')}`),
+}
+
+export default defineConfig({ plugins: [react(), variantAssets, curtain] })
