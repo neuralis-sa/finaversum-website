@@ -59,6 +59,8 @@ avec le message pré-rempli vers info@finaversum.ch.
 src/content.js            contenu (textes, coordonnées, routes)
 src/shared.jsx            composants communs (photo, logo, icônes, formulaire, carte)
 src/variants/<id>/        une proposition = index.jsx (pages) + styles.css
+src/Chooser.jsx           page de sélection des propositions (dist/index.html)
+docs/apercus/vignettes/   vignettes desktop + mobile de la page de sélection (haut des captures docs/apercus/)
 scripts/build.mjs         build client + SSR et pré-rendu HTML de chaque route
 ```
 

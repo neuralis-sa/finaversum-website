@@ -24,10 +24,14 @@ const variantAssets = {
   },
 }
 
+// Comme au build : une clé de session par variante, rien sur le sélecteur.
 const curtain = {
   name: 'curtain',
-  transformIndexHtml: (html) =>
-    html.replace('</head>', `${curtainHead()}\n</head>`).replace('<div id="root"></div>', `<div id="root"></div>\n${curtainBody('/')}`),
+  transformIndexHtml(html, { originalUrl = '/' }) {
+    const id = originalUrl.split('?')[0].split('/')[1]
+    if (!variantIds.includes(id)) return html
+    return html.replace('</head>', `${curtainHead(`/${id}/`)}\n</head>`).replace('<div id="root"></div>', `<div id="root"></div>\n${curtainBody('/')}`)
+  },
 }
 
 export default defineConfig({ plugins: [react(), variantAssets, curtain] })

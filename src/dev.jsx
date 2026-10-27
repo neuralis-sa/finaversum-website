@@ -15,6 +15,6 @@ if (variantIds.includes(id)) {
 } else {
   import('./chooser.css')
   Promise.all(variantIds.map((v) => loaders[`./variants/${v}/index.jsx`]())).then((mods) => {
-    root.render(<Chooser variants={mods.map(({ default: v }) => ({ id: v.id, name: v.name, summary: v.summary, href: `/${v.id}/` }))} />)
+    root.render(<Chooser variants={mods.map(({ default: v }) => ({ id: v.id, name: v.name, summary: v.summary, href: `/${v.id}/` }))} previews="/docs/apercus/vignettes/" />)
   })
 }

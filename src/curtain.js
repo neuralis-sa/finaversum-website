@@ -4,8 +4,9 @@
 // que le voile s'ouvre.
 //
 // Du HTML/CSS inline, injecté par scripts/build.mjs (et vite.config.js en dev),
-// hors de #root pour ne pas gêner l'hydratation. Une fois par session d'onglet ;
-// sans JavaScript ou avec le mouvement réduit, il ne s'affiche jamais.
+// hors de #root pour ne pas gêner l'hydratation. À la première page de chaque
+// variante dans la session d'onglet, et à chaque rechargement ; pas lors de la
+// navigation entre pages. Sans JavaScript ou avec le mouvement réduit, jamais.
 
 // Découpe du logo (1200 × 131) : FIN | ΛV | ERSUM, en % de la largeur.
 const parts = [
@@ -44,13 +45,14 @@ html.fv-curtain-out .fv-veil{animation:fv-open .42s cubic-bezier(.45,0,.25,1) .2
 `
 
 // Dans <head> : décide avant le premier rendu, sans flash.
-const decide = `try{if(!sessionStorage.getItem('fv-curtain')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){sessionStorage.setItem('fv-curtain','1');document.documentElement.classList.add('fv-loading')}}catch(e){}`
+const decide = (base) =>
+  `try{var k='fv-curtain:'+${JSON.stringify(base)},n=performance.getEntriesByType('navigation')[0];if((!sessionStorage.getItem(k)||(n&&n.type==='reload'))&&!matchMedia('(prefers-reduced-motion: reduce)').matches){sessionStorage.setItem(k,'1');document.documentElement.classList.add('fv-loading')}}catch(e){}`
 
 // Fin de <body> : sort après le chargement complet, l'entrée jouée au moins
 // (1,2 s), au plus tard à 4 s.
 const release = `(function(){var h=document.documentElement;if(!h.classList.contains('fv-loading'))return;var t0=Date.now(),done=0;function out(){if(done++)return;setTimeout(function(){h.classList.add('fv-curtain-out');setTimeout(function(){h.classList.remove('fv-loading','fv-curtain-out')},700)},Math.max(0,1200-(Date.now()-t0)))}if(document.readyState==='complete')out();else addEventListener('load',out);setTimeout(out,4000)})()`
 
-export const curtainHead = () => `<style>${css.trim()}</style>\n<script>${decide}</script>`
+export const curtainHead = (base) => `<style>${css.trim()}</style>\n<script>${decide(base)}</script>`
 
 export const curtainBody = (base) => {
   const logo = `${base}img/logo.png`

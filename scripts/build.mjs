@@ -68,7 +68,7 @@ function page({ route, html, base, css, js, meta, company, publicPath }) {
 <meta property="og:image" content="${siteUrl}${publicPath}img/photo-2-1920.webp">
 <meta name="theme-color" content="${meta.themeColor}">
 <link rel="icon" href="${base}favicon.svg" type="image/svg+xml">
-${curtainHead()}
+${curtainHead(base)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,400&display=swap">
@@ -128,9 +128,10 @@ ${server.routes.map((r) => `  <url><loc>${siteUrl}${publicPath}${r.path.slice(1)
 
 if (!single) {
   const { server } = built[0]
-  const body = server.renderChooser(built.map(({ id, name, summary, href }) => ({ id, name, summary, href })))
+  const body = server.renderChooser(built.map(({ id, name, summary, href }) => ({ id, name, summary, href })), 'apercus/')
   await cp(path.join(root, 'public/img/logo.png'), path.join(dist, 'img/logo.png'), { recursive: true })
   await cp(path.join(root, 'public/favicon.svg'), path.join(dist, 'favicon.svg'))
+  await cp(path.join(root, 'docs/apercus/vignettes'), path.join(dist, 'apercus'), { recursive: true })
   await writeFile(path.join(dist, 'index.html'), `<!doctype html>
 <html lang="fr-CH">
 <head>
@@ -139,6 +140,8 @@ if (!single) {
 <meta name="robots" content="noindex">
 <title>Finaversum – Propositions</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@300..700&display=swap">
 <style>${await readFile(path.join(root, 'src/chooser.css'), 'utf8')}</style>
 </head>

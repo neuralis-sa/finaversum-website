@@ -7,4 +7,4 @@ export { routes, company } from './content.js'
 export const meta = { id: variant.id, name: variant.name, summary: variant.summary, themeColor: variant.themeColor }
 
 export const render = (path, base) => renderToString(<App variant={variant} path={path} base={base} />)
-export const renderChooser = (variants) => renderToStaticMarkup(<Chooser variants={variants} />)
+export const renderChooser = (variants, previews) => renderToStaticMarkup(<Chooser variants={variants} previews={previews} />)
