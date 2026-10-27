@@ -3,6 +3,7 @@
 //
 //   pnpm build                              → dist/<variante>/… + dist/index.html (sélecteur)
 //   VARIANT=classique BASE=/ pnpm build     → une seule variante à la racine de dist/ (mise en ligne)
+//   BASE=/finaversum-website/ pnpm build    → toutes les variantes servies sous un sous-chemin (GitHub Pages)
 //
 // SITE_URL (défaut https://finaversum.ch) sert aux URL canoniques et au sitemap.
 
@@ -20,6 +21,7 @@ const siteUrl = (process.env.SITE_URL || 'https://finaversum.ch').replace(/\/$/,
 const single = process.env.VARIANT
 if (single && !variantIds.includes(single)) throw new Error(`VARIANT inconnue : ${single} (${variantIds.join(', ')})`)
 const ids = single ? [single] : variantIds
+const prefix = (process.env.BASE || '/').replace(/\/?$/, '/')
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -90,7 +92,7 @@ await rm(path.join(root, '.ssr'), { recursive: true, force: true })
 
 const built = []
 for (const id of ids) {
-  const base = single ? process.env.BASE || '/' : `/${id}/`
+  const base = single ? prefix : `${prefix}${id}/`
   const outDir = single ? dist : path.join(dist, id)
   const ssrDir = path.join(root, '.ssr', id)
 

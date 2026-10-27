@@ -36,6 +36,8 @@ VARIANT=classique BASE=/ SITE_URL=https://finaversum.ch pnpm build
 # puis déposer le contenu de dist/ chez l'hébergeur (Infomaniak, Netlify, Cloudflare Pages…)
 ```
 
+GitHub Pages : `.github/workflows/pages.yml` publie les 4 propositions et le sélecteur à chaque push sur `main` (ou à la main depuis l'onglet Actions), sur le domaine réglé dans Settings → Pages (<https://finaversum-website.neuralis.dev/>, sinon <https://neuralis-sa.github.io/finaversum-website/>). Le chemin et l'URL du site sont passés au build via `BASE` et `SITE_URL`.
+
 ## Proposition 4 – démarche
 
 Design system issu du skill `ui-ux-pro-max` (`.claude/skills/ui-ux-pro-max`) :
