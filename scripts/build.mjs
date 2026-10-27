@@ -1,8 +1,8 @@
 // Génère un site 100 % statique par proposition : build client + build SSR,
 // puis pré-rendu de chaque route en HTML.
 //
-//   npm run build                          → dist/<variante>/… + dist/index.html (sélecteur)
-//   VARIANT=classique BASE=/ npm run build → une seule variante à la racine de dist/ (mise en ligne)
+//   pnpm build                              → dist/<variante>/… + dist/index.html (sélecteur)
+//   VARIANT=classique BASE=/ pnpm build     → une seule variante à la racine de dist/ (mise en ligne)
 //
 // SITE_URL (défaut https://finaversum.ch) sert aux URL canoniques et au sitemap.
 

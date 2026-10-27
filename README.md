@@ -23,16 +23,16 @@ Pages générées pour chaque proposition : accueil, à propos, prestations, par
 ## Commandes
 
 ```bash
-npm install
-npm run dev        # http://localhost:5173/ → sélecteur, puis /classique/, /editorial/, /prestige/, /parcours/
-npm run build      # dist/ : les 4 propositions + page de sélection
-npm run preview    # sert dist/ sur http://localhost:4173/
+pnpm install
+pnpm dev            # http://localhost:5173/ → sélecteur, puis /classique/, /editorial/, /prestige/, /parcours/
+pnpm build          # dist/ : les 4 propositions + page de sélection
+pnpm preview        # sert dist/ sur http://localhost:4173/
 ```
 
 Mise en ligne d'une seule proposition à la racine du domaine :
 
 ```bash
-VARIANT=classique BASE=/ SITE_URL=https://finaversum.ch npm run build
+VARIANT=classique BASE=/ SITE_URL=https://finaversum.ch pnpm build
 # puis déposer le contenu de dist/ chez l'hébergeur (Infomaniak, Netlify, Cloudflare Pages…)
 ```
 
