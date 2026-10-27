@@ -12,6 +12,7 @@ import { mkdir, readFile, rm, writeFile, cp } from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import path from 'node:path'
 import { variantIds } from '../src/variants/index.js'
+import { curtainHead, curtainBody } from '../src/curtain.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
@@ -67,6 +68,7 @@ function page({ route, html, base, css, js, meta, company, publicPath }) {
 <meta property="og:image" content="${siteUrl}${publicPath}img/photo-2-1920.webp">
 <meta name="theme-color" content="${meta.themeColor}">
 <link rel="icon" href="${base}favicon.svg" type="image/svg+xml">
+${curtainHead()}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,400&display=swap">
@@ -75,6 +77,7 @@ ${route.path === '/' ? `<script type="application/ld+json">${JSON.stringify(json
 </head>
 <body>
 <div id="root">${html}</div>
+${curtainBody(base)}
 <script id="__page" type="application/json">${JSON.stringify({ path: route.path, base })}</script>
 <script type="module" src="${base}${js}"></script>
 </body>
