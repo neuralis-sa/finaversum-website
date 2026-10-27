@@ -44,6 +44,35 @@ export function Photo({ n, className, sizes = '100vw', eager = false, alt = phot
   )
 }
 
+// Images générées pour la proposition 4 (public/img/gen/<name>-{800,1600}.webp).
+export const genImages = {
+  valais: { w: 1600, h: 900, alt: 'Vignobles en terrasses et Alpes au-dessus de la vallée du Rhône, près de Martigny' },
+  particuliers: { w: 1600, h: 2000, alt: 'Un couple examine sa planification financière avec un conseiller' },
+  entrepreneur: { w: 1600, h: 2000, alt: 'Un entrepreneur valaisan dans sa cave, dossier en main' },
+  direction: { w: 1600, h: 2000, alt: 'Dirigeants en réunion avec un conseiller dans une salle donnant sur les Alpes' },
+  planification: { w: 1600, h: 900, alt: 'Projection financière à long terme étudiée sur papier' },
+  transmission: { w: 1600, h: 900, alt: 'Un père et sa fille marchent dans les vignes, symbole de transmission' },
+}
+
+export function GenImage({ name, className, sizes = '100vw', eager = false }) {
+  const { asset } = useSite()
+  const { w, h, alt } = genImages[name]
+  return (
+    <img
+      className={className}
+      src={asset(`img/gen/${name}-1600.webp`)}
+      srcSet={`${asset(`img/gen/${name}-800.webp`)} 800w, ${asset(`img/gen/${name}-1600.webp`)} 1600w`}
+      sizes={sizes}
+      width={w}
+      height={h}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+    />
+  )
+}
+
 export function Logo({ white = false, className }) {
   const { asset } = useSite()
   return (
